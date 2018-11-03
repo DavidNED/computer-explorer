@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+import './index';
+const redux = require('redux')
 
 
-const data =  
+const data =   {
 
-  {
+
     "Ivel Z3": {
       name: "Ivel Z3",
       manufacturer: "Ivasim",
@@ -30,6 +32,43 @@ const data =
       origin: "USA"
     }
   }
+
+  const selectData = () => {
+  const option = document.getElementById('select').children;
+    if (option.id === 'two'){
+      return data['Ivel Z3']
+    }
+  
+  }
+
+
+
+const initialState = [];
+
+const reducer = (state = initialState, action = {}) => {
+  switch (action.type) {
+  case 'ADD_MODEL':
+    return [
+      ...state,
+      action.payload
+    ]
+
+  default:
+    return state
+  }
+}
+const store = redux.createStore(reducer)
+const action = {
+  type: 'ADD_MODEL',
+  payload: {
+    
+  }
+}
+
+ 
+redux.createStore(reducer)
+store.dispatch(action)
+
    
     
 class App extends Component {
@@ -42,8 +81,13 @@ class App extends Component {
 }
   
 updateSelection(event) {
-  this.setState({value: event.target.value})
-}
+  this.setState({value: event.target.value})}
+
+
+
+
+  
+
 
 
 
@@ -52,29 +96,18 @@ updateSelection(event) {
      <div className="App">
         <div className="computer-models">
         
-        <select onChange={this.updateSelection} value={this.state.value}>
-
-          
-            <option value="">-- pick a model --</option>
-          
-          
-        
-            <option value="Bally Astrocade">Bally Astrocade (1977)</option>
-        
-
-          
-            <option value="Sord M200 Smart Home Computer">Sord M200 Smart Home Computer (1971)</option>
-          
-
-          
-            <option value="Commodore 64">Commodore 64 (1982)</option>
-        
-
-          
-            <option value="Ivel Z3">Ivel Z3 (1969)</option>
+        <select id="select" onChange={this.updateSelection} value={this.state.value}> 
+    
+          <option id="one" value="">-- pick a model --</option>
+          <option id="two" value="Bally Astrocade">Bally Astrocade (1977)</option>
+          <option id="three" value="Sord M200 Smart Home Computer">Sord M200 Smart Home Computer (1971)</option>
+          <option id="four" value="Commodore 64">Commodore 64 (1982)</option>
+          <option id="five" value="Ivel Z3">Ivel Z3 (1969)</option>
           
         
         </select>
+
+        <button id="btn" onClick={reducer}>Add</button>
       
     
     </div>
